@@ -472,14 +472,15 @@ const TYPE = {
 const MUSCLE_MAP = {
   'Spanish Squat Iso':      ['Quads'],
   'Back Squat':             ['Quads','Glutes','Core'],
-  'Trap-Bar RDL':           ['Hamstrings','Glutes','Lower Back'],
-  'Leg Extension (HSR)':    ['Quads'],
-  'Nordic Curl':            ['Hamstrings'],
+  'Romanian Deadlift':      ['Hamstrings','Glutes','Lower Back'],
+  'Leg Extension (HSR + Iso)': ['Quads'],
   'Side-Lying Abduction':   ['Glutes'],
   'Copenhagen Plank':       ['Adductors','Core'],
-  'Dead Bug':               ['Core'],
   'Assisted Pull-Up':       ['Back','Biceps'],
   'Overhead Press':         ['Shoulders','Triceps'],
+  'Bench Press':            ['Chest','Triceps','Shoulders'],
+  'Push Press':             ['Shoulders','Triceps','Quads'],
+  'CMJ':                    ['Quads','Glutes','Calves'],
   'Plyo Push-Up':           ['Chest','Triceps','Shoulders'],
   'Ring Support Hold':      ['Shoulders','Core'],
   'Handstand Hold':         ['Shoulders','Core'],
@@ -556,9 +557,9 @@ const ALTERNATIVES = {
 };
 
 const DAY_MAIN_EXERCISES = {
-  A: ['Back Squat','Trap-Bar RDL'],
-  B: ['Assisted Pull-Up','Overhead Press'],
-  C: ['Trap-Bar Jump','KB Swing'],
+  A: ['Back Squat','Romanian Deadlift'],
+  B: ['Overhead Press','Bench Press'],
+  C: ['Push Press','Trap-Bar Jump'],
 };
 
 const DAYS = {
@@ -566,7 +567,7 @@ const DAYS = {
     label:'Lower — Strength + Knee/Hip Rehab', shortLabel:'Lower + Rehab',
     color:'#30d158', colorBg:'#0d2818',
     description:'Max leg strength (HSR) · patellar tendon + hip stability',
-    mainExercises:['Back Squat','Trap-Bar RDL'],
+    mainExercises:['Back Squat','Romanian Deadlift'],
     phases:[
       {label:'Tendon Prep — Isometric', exercises:[
         {name:'Spanish Squat Iso', baseSets:5, baseReps:'45s', pause:60, type:'isometric',
@@ -575,58 +576,64 @@ const DAYS = {
       {label:'Max Strength — Heavy Slow Resistance', exercises:[
         {name:'Back Squat', baseSets:4, baseReps:'5', pause:180, type:'strength', isPR:true,
           cue:'Controlled depth (no forced deep bottom, hip-friendly) · 3s eccentric · brace hard · drive up'},
-        {name:'Trap-Bar RDL', baseSets:4, baseReps:'6', pause:150, type:'strength', isPR:true,
-          cue:'Hip hinge · neutral spine · hamstring stretch · glute drive at top · avoids deep hip flexion'},
+        {name:'Romanian Deadlift', baseSets:4, baseReps:'6', pause:150, type:'strength', isPR:true,
+          cue:'Barbell hip hinge · slight knee bend · bar close to shins · neutral spine · feel the hamstring stretch, glute drive at the top · control the lower'},
       ]},
       {label:'Tendon & Hip Rehab', exercises:[
-        {name:'Leg Extension (HSR)', baseSets:3, baseReps:'8', pause:120, type:'rehab',
-          cue:'Heavy, slow 3–4s each way · isolated patellar-tendon load · stop 1–2 reps short of a pain flare'},
+        {name:'Leg Extension (HSR + Iso)', baseSets:3, baseReps:'8', pause:120, type:'rehab',
+          cue:'Heavy, slow 3–4s each way, AND add a 3–5s ISO HOLD at the top of every rep (or a 30–45s iso hold on the last set). Isolated patellar-tendon load. Stop 1–2 reps short of a pain flare.'},
         {name:'Side-Lying Abduction', baseSets:3, baseReps:'12 each', pause:60, type:'prevention',
           cue:'Glute medius and posterolateral hip · slow · no hip-flexor takeover · key stabiliser for dysplasia'},
+        {name:'Copenhagen Plank', baseSets:2, baseReps:'20–30s', pause:60, type:'prevention',
+          cue:'Adductor + hip stability · max 2 sets · hips level · regress to a bent-knee (short-lever) version if needed'},
       ]},
     ]
   },
   B:{
     label:'Upper — Strength + Power + Gymnastics', shortLabel:'Upper + Gym',
     color:'#0a84ff', colorBg:'#001a3a',
-    description:'Overhead + pull strength · gymnastics trunk and shoulder',
-    mainExercises:['Assisted Pull-Up','Overhead Press'],
+    description:'Push + pull strength · upper power · gymnastics shoulder',
+    mainExercises:['Overhead Press','Bench Press'],
     phases:[
       {label:'Upper Max Strength', exercises:[
         {name:'Assisted Pull-Up', baseSets:4, baseReps:'6–8', pause:150, type:'strength',
           cue:'Use band- or machine-assistance so you get 6–8 clean reps. Full ROM: chin over bar at top, arms fully straight at bottom, controlled 2–3s lower. PROGRESS week by week: reduce the assistance (thinner band / less machine help) → then bodyweight reps → later add weight. Slow negatives (jump up, lower 3–5s) also build the strength to get there.'},
         {name:'Overhead Press', baseSets:4, baseReps:'5', pause:180, type:'strength', isPR:true,
           cue:'Ribs down, glutes tight · no big lumbar arch · full lockout · gymnastics overhead strength'},
+        {name:'Bench Press', baseSets:4, baseReps:'5', pause:180, type:'strength', isPR:true,
+          cue:'Retract + depress scapulae · feet planted · 2s lower, press explosively · no bar bounce · full lockout'},
       ]},
-      {label:'Gymnastics + Shoulder Health', exercises:[
+      {label:'Power + Gymnastics + Shoulder', exercises:[
+        {name:'Plyo Push-Up', baseSets:4, baseReps:'5', pause:90, type:'power',
+          cue:'Explode off the floor · hands leave the ground · soft landing · knee-safe (hand-based) upper-body power'},
         {name:'Handstand Hold', baseSets:3, baseReps:'30–45s', pause:90, type:'prevention',
           cue:'Wall-supported · hollow body · push tall through shoulders · stacked line · gymnastics carryover'},
-        {name:'Ring Support Hold', baseSets:3, baseReps:'20–30s', pause:90, type:'prevention',
-          cue:'Rings turned out · straight body · scapula depressed · straight-arm strength for gymnastics'},
         {name:'Face Pull', baseSets:3, baseReps:'15', pause:60, type:'prevention',
           cue:'Cable at forehead · external rotation at the end · rear delt and rotator-cuff health'},
       ]},
     ]
   },
   C:{
-    label:'Power / Speed-Strength + Athletic (knee-safe)', shortLabel:'Power + Plyo',
+    label:'Power — French Contrast (knee-safe)', shortLabel:'Power Contrast',
     color:'#ff9f0a', colorBg:'#2a1800',
-    description:'Explosive hip power · speed-strength · graded low-impact plyos',
-    mainExercises:['Trap-Bar Jump','KB Swing'],
+    description:'Overhead power · contrast jumps (loaded + bodyweight) · reactive',
+    mainExercises:['Push Press','Trap-Bar Jump'],
     phases:[
       {label:'Tendon Prep — Isometric', exercises:[
         {name:'Wall Sit Iso', baseSets:5, baseReps:'30–45s', pause:60, type:'isometric',
           cue:'90° knee · hold hard · tendon maintenance dose · keep it pain-free'},
       ]},
-      {label:'Power / Speed-Strength', exercises:[
-        {name:'Trap-Bar Jump', baseSets:5, baseReps:'3', pause:150, type:'power',
-          cue:'Low load, jump only a few cm · SOFT landing, absorb quietly · minimal impact · triple extension'},
-        {name:'KB Swing', baseSets:4, baseReps:'6', pause:90, type:'power',
-          cue:'Hip snap from glutes, not a squat · hip-friendly power · hinge, avoid over-flexing the hip'},
-        {name:'Speed Squat', baseSets:5, baseReps:'3', pause:90, type:'power',
-          cue:'50–60% · maximal push intent (CAT) · controlled depth · speed-strength'},
+      {label:'Overhead Power', exercises:[
+        {name:'Push Press', baseSets:5, baseReps:'3', pause:150, type:'power', isPR:true,
+          cue:'Dip from hips + knees (not the lower back) → explosive leg drive → overhead lockout · elbows forward in the dip · powerful, fast'},
       ]},
-      {label:'Graded Energy Storage — Plyo (only if pain-free)', exercises:[
+      {label:'Contrast Jumps (French — superset the pair, no rest between them)', exercises:[
+        {name:'Trap-Bar Jump', baseSets:4, baseReps:'3', pause:150, type:'power',
+          cue:'CONTRAST pair 1 → straight into CMJ, no rest. LOAD = LIGHT: ~20–30% of bodyweight (or a light trap bar). Chase JUMP HEIGHT + a fast take-off, NOT heavy weight — heavy landings stress the irritable tendon. Soft, quiet landing. If unsure, go lighter. 3 reps, then the CMJ.'},
+        {name:'CMJ', baseSets:4, baseReps:'3', pause:150, type:'plyo',
+          cue:'CONTRAST pair 2 → immediately after the loaded jump, no rest. Bodyweight countermovement jump, MAX height, full arm swing. It should feel light and springy (potentiation). Soft landing. THEN rest ~2–3 min before the next round.'},
+      ]},
+      {label:'Reactive Plyo (only if pain-free)', exercises:[
         {name:'Pogo Hops', baseSets:3, baseReps:'10', pause:60, type:'plyo',
           cue:'Stiff ankles, tiny fast hops · low-impact tendon energy storage · stop if the knee complains'},
       ]},
@@ -634,7 +641,7 @@ const DAYS = {
   },
 };
 
-const PR_EXERCISES = ['Back Squat','Trap-Bar RDL','Overhead Press'];
+const PR_EXERCISES = ['Back Squat','Romanian Deadlift','Overhead Press','Bench Press','Push Press'];
 
 // ── Bodyweight exercises: fraction of bodyweight that loads the movement.
 //    Entered weight = ADDED load on top (pull-up: +weight; push-up: usually 0). ──
@@ -648,8 +655,10 @@ const STRENGTH_LEVELS = ['Beginner','Novice','Intermediate','Advanced','Elite','
 const LEVEL_COLORS   = ['#8e8e93','#0a84ff','#30d158','#bf5af2','#ff9f0a','#ff453a'];
 const STRENGTH_STANDARDS = {
   'Back Squat':        {male:[0.75,1.25,1.75,2.25,2.75], female:[0.55,0.95,1.35,1.75,2.15]},
-  'Trap-Bar RDL':      {male:[1.00,1.50,2.00,2.50,3.00], female:[0.75,1.15,1.55,1.95,2.35]},
+  'Romanian Deadlift': {male:[0.85,1.30,1.75,2.20,2.65], female:[0.60,0.95,1.30,1.65,2.00]},
   'Overhead Press':    {male:[0.35,0.55,0.80,1.10,1.40], female:[0.20,0.35,0.50,0.70,0.90]},
+  'Bench Press':       {male:[0.50,0.75,1.25,1.75,2.00], female:[0.30,0.50,0.75,1.05,1.35]},
+  'Push Press':        {male:[0.50,0.75,1.05,1.40,1.75], female:[0.35,0.55,0.75,1.00,1.30]},
 };
 
 // Age factor: <=30 = 1.0, gentle credit afterwards (masters-style), capped ~+45%.
@@ -696,7 +705,7 @@ function loadState() {
   if(!s) s={currentWeek:1,sessions:{},prs:{},progressionData:{},history:[]};
   // defaults for newer fields (backwards compatible with old saved data)
   if(!s.profile) s.profile={age:'',height:'',weight:'',sex:'female'};
-  if(!s.supersets) s.supersets={};
+  if(!s.supersets) s.supersets={C:{'Trap-Bar Jump':'CMJ','CMJ':'Trap-Bar Jump'}};
   if(!s.painLog) s.painLog=[];
   return s;
 }
